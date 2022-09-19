@@ -1,0 +1,43 @@
+<div *ngIf="work">
+  <div class="dashboard-table">
+    <table mat-table [dataSource]="work.items" class="mat-elevation-z8">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+      <ng-container matColumnDef="Content">
+        <th mat-header-cell *matHeaderCellDef>Content Type</th>
+        <td mat-cell *matCellDef="let row">{{ row.type }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="publisher">
+        <th mat-header-cell *matHeaderCellDef>Publisher.</th>
+        <td mat-cell *matCellDef="let row">{{ row.publisher }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="DOI">
+        <th mat-header-cell *matHeaderCellDef>DOI</th>
+        <td mat-cell *matCellDef="let row">{{ row.DOI }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="Action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell *matCellDef="let row">
+          <span (click)="onViewClick(row)">View</span>
+        </td>
+      </ng-container>
+    </table>
+
+
+    <mat-paginator [length]="work['total-results']" [pageSize]="work['items-per-page']"
+      (page)="pageEvent = $event; onPageClick($event)">
+    </mat-paginator>
+  </div>
+
+</div>
+
+<div style="max-width:40%">
+  <div *ngIf="!work" class="dashboard-table">Loading Table....</div>
+</div>
+
+
+<router-outlet></router-outlet>
