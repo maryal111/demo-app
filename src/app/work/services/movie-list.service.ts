@@ -4,13 +4,6 @@ import { HttpService } from 'src/app/shared/services/http.service';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs';
 
-export interface abc {
-  totalResult: number;
-  itemsCount: number;
-  currentPage: number;
-  totalPage: number;
-}
-
 @Injectable({
   providedIn: 'root',
 })
