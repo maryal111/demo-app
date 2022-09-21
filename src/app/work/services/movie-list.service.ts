@@ -14,19 +14,19 @@ export interface abc {
 @Injectable({
   providedIn: 'root',
 })
-export class WorkListService {
+export class MovieListService {
   baseUrl = `${environment.url}`;
 
   constructor(private httpService: HttpService) {}
 
   work: any = {};
 
-  getWorkList(page: number): Observable<any> {
-    const url = `${this.baseUrl}/works?query=start-index=${page}`;
+  getMovieList(): Observable<any> {
+    const url = `${this.baseUrl}/films`;
 
     return this.httpService.getService(url).pipe(
       map((data) => {
-        return (this.work = data.message);
+        return (this.work = data);
       })
     );
   }

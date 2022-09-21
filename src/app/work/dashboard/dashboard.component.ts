@@ -1,43 +1,39 @@
-import { Component, OnInit } from '@angular/core';
-import { WorkListService } from '../services/work-list.service';
-import { Router } from '@angular/router';
-import { PageEvent } from '@angular/material/paginator';
-import { map } from 'rxjs/operators';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MovieListService } from '../services/movie-list.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
 })
+
 export class DashboardComponent implements OnInit {
   constructor(
-    private workListService: WorkListService,
-    private router: Router
+    private movieListService: MovieListService,
   ) {}
-  work: any;
-  totalResult: any;
-  pageEvent!: PageEvent;
-  pageIndex:number = 1;
 
-  displayedColumns: string[] = ['Content','publisher', 'DOI', 'Action'];
-  result: any;
+  displayedColumns: string[] = ['director', 'producer', 'title', 'runningTime'];
+  dataSource: any;
+  movies: any;
+
+  @ViewChild(MatPaginator) paginator !: MatPaginator;
+  @ViewChild(MatSort) sort !: MatSort;
 
   ngOnInit(): void {
-    this.workListService.getWorkList(this.pageIndex).subscribe((data) => {
-      this.work = data;
+    this.movieListService.getMovieList().subscribe((data) => {
+      this.movies = data;
+
+      this.dataSource = new MatTableDataSource<any>(this.movies)
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
     });
   }
 
-  onViewClick(row: any) {
-    this.router.navigate(['/detail', row.DOI]);
-  }
-
-  onPageClick(event: PageEvent) {
-    const page = event.pageIndex;
-    this.work = !this.work;
-
-    this.workListService.getWorkList(page).subscribe((data) => {
-      this.work = data;
-    });
+  search(event: Event) {
+    const searchedValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = searchedValue;
   }
 }

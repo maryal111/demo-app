@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  url: 'https://api.crossref.org'
+  url: 'https://ghibliapi.herokuapp.com'
 };
 
 /*

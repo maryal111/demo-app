@@ -2,3 +2,15 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.dashboard-container{
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 600px) {
+    .dashboard-container{
+        max-width: 50%;
+        margin: auto;
+    }
+  }
